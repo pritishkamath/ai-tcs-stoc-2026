@@ -9,13 +9,22 @@
         :root { --primary: #005a9c; } /* Academic Blue */
         section { display: none; padding-top: 0.2rem; }
         .active-tab { 
-            background: rgba(0, 90, 156, 0.15); 
-            border-radius: 4px; 
             color: var(--primary) !important;
-            font-weight: bold; 
             padding: 0.25rem 0.75rem !important;
         }
-        .speaker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+        .nav-indicator {
+            position: absolute;
+            z-index: 1;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(0, 90, 156, 0.15), rgba(0, 90, 156, 0.05));
+            border: 1px solid rgba(0, 90, 156, 0.25);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 90, 156, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .speaker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
         .speaker-card { text-align: center; border: 1px solid #eee; padding: 0.6rem 0.5rem; border-radius: 8px; }
         .speaker-card img { border-radius: 50%; width: 110px; height: 110px; object-fit: cover; margin-bottom: 0.5rem; border: 2px solid #eee; }
         .speaker-card h5 { margin-bottom: 0.15rem; }
@@ -60,6 +69,14 @@
                 border: 1px solid rgba(255, 255, 255, 0.1);
             }
             nav { background: #11191f !important; border-bottom: 1px solid #24333e !important; }
+            .active-tab {
+                color: #eee !important;
+            }
+            .nav-indicator {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
         }
 
         header hgroup h1 {
@@ -90,7 +107,7 @@
         }
         
         nav { position: sticky; top: 0; background: white; z-index: 1000; border-bottom: 1px solid #eee; padding: 0; margin-bottom: 0; }
-        nav ul { margin-bottom: 0; }
+        nav ul { margin-bottom: 0; position: relative; z-index: 2; }
         main.container { padding-top: 0; padding-bottom: 0; }
         main h3 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
         main p { margin-bottom: 0.75rem; }
@@ -109,7 +126,7 @@
                 <img src="cover.jpg" alt="Can AI do Theory? Workshop Cover">
                 <hgroup>
                     <h1>Can AI do Theory?</h1>
-                    <h2>A Workshop at <a href="https://acm-stoc.org/stoc2026/" target="_blank">STOC&nbsp;TheoryFest 2026</a></h2>
+                    <h2>Workshop at <a href="https://acm-stoc.org/stoc2026/" target="_blank">STOC&nbsp;TheoryFest 2026</a></h2>
                     <p><strong>June 27, 2026</strong> | Salt Lake City, Utah, USA</p>
                 </hgroup>
             </div>
@@ -117,9 +134,10 @@
     </header>
 
     <nav class="container">
+        <div class="nav-indicator"></div>
         <ul>
             <li><a href="#about" id="nav-about">About</a></li>
-            <li><a href="#speakers" id="nav-speakers">Speakers & Panelists</a></li>
+            <li><a href="#posters" id="nav-posters">Call for Posters</a></li>
             <li><a href="#program" id="nav-program">Program</a></li>
         </ul>
     </nav>
@@ -127,12 +145,58 @@
     <main class="container">
         
         <section id="about">
-            <h3>About</h3>
+            <br/>
             <p>
-                The theme for this workshop will be to explore the intersection of artificial intelligence and theoretical computer science.
-                Through several talks, panel discussion and social events, our goal is to foster a community-wide dialogue on whether AI can
-                augment our current methologies or redefine how we approach research in theoretical computer science.
+                This workshop will explore the intersection of artificial intelligence and theoretical computer science.<br/>
+
+                Through invited talks, a panel discussion and a poster session, we hope to foster a community-wide dialogue on
+                whether and how AI can augment our current methodologies or redefine how we approach research in theoretical computer science.
             </p>
+
+            <hr>
+            <h3>Invited Speakers</h3>
+            
+            <h4>In-Person Speakers</h4>
+            <div class="speaker-grid">
+                <div class="speaker-card">
+                    <img src="https://www.scottaaronson.com/aarsmall.gif" alt="Scott Aaronson">
+                    <h5><a href="https://www.scottaaronson.com/" target="_blank">Scott<br/>Aaronson</a></h5>
+                    <p>UT Austin</p>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://i.insider.com/6932040904d0f0a114f17332?width=700" alt="Carina Hong">
+                    <h5><a href="https://www.linkedin.com/in/carina-hong/" target="_blank">Carina<br/>Hong</a></h5>
+                    <p><a href="https://axiommath.ai/" target="_blank">Axiom Math</a></p>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://statistics.fas.harvard.edu/sites/g/files/omnuum10116/files/styles/hwp_4_5__480x600/public/2025-08/Mark%20Sellke_updated%20photo.png?itok=4Gq9X42T" alt="Mark Selke">
+                    <h5><a href="https://msellke.com/">Mark<br/>Sellke</a></h5>
+                    <p>Harvard, Open AI</p>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://www.cs.cmu.edu/~dwoodruf/myPic.jpg" alt="David Woodruff">
+                    <h5><a href="https://www.cs.cmu.edu/~dwoodruf/" target="_blank">David<br/>Woodruff</a></h5>
+                    <p>CMU</p>
+                </div>
+            </div>
+            <br/>
+            <h4>Virtual Speakers</h4>
+            <div class="speaker-grid">
+                <div class="speaker-card">
+                    <img src="https://diplo-media.s3.eu-central-1.amazonaws.com/2024/10/sebastien-bubeck-microsoft-openai-chatgpt-1024x576.jpg" alt="Sébastien Bubeck">
+                    <h5><a href="http://sbubeck.com/">Sébastien<br/>Bubeck</a></h5>
+                    <p>Open AI</p>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://cdss.berkeley.edu/sites/default/files/styles/max_2600x2600/public/2024-01/Prabhakar%20Raghavan.jpg?itok=hUsSRP3O" alt="Prabhakar Raghavan">
+                    <h5><a href="https://research.google/people/prabhakarraghavan/" target="_blank" class="outline">Prabhakar<br/>Raghavan</a></h5>
+                    <p>Google</p>
+                </div>
+            </div>
+
+            <hr>
+            <h3>Panel Discussion</h3>
+            <p>The panel will feature a number of established researchers who will share their perspectives on how they see AI influencing the future of theoretical computer science.</p>
 
             <hr>
             <h3>Organizers</h3>
@@ -145,17 +209,27 @@
             </ul>
         </section>
 
-        <section id="speakers">
-            
-            <h3>Invited Speakers</h3>
-            <p>Details coming soon...</p>
 
-            <hr>
-            <h3>Panelists</h3>
-            <p>Details coming soon...</p>
+
+        <section id="posters">
+            <p>We seek poster submissions that explore the intersection of artificial intelligence and theoretical computer science. Topics of interest include, but are not limited to:</p>
+            <ul>
+                <li>AI-assisted proof search and algorithm discovery,</li>
+                <li>ML-driven approaches to classical theoretical problems,</li>
+                <li>Formalization of proofs (e.g. Lean, Rocq, Isabelle, etc.),</li>
+                <li>Exploration of effective human-AI collaboration.</li>
+            </ul>
+            <p>These could be related to any domain of interest to theoretical computer science or mathematics.</p>
+            <p>We welcome contributions from researchers and practitioners across all backgrounds, including academia and industry. If you are uncertain whether your research fits the exact scope, we strongly encourage you to submit regardless!</p>
+            <p><strong>Key dates:</strong><br>
+            <ul>
+                <li>Submission deadline: <strong>May 15, 2026</strong> (AoE)</li>
+                <li>Notification: <strong>June 5, 2026</strong></li>
+            </ul>
+            <iframe src="https://docs.google.com/forms/d/1hdNUCOSu80wQIGLq-P_WbuFD4rrl_Flfu3XaQzE_OFw/viewform?embedded=true"
+                width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0"
+                style="border: 1px solid #eee; border-radius: 8px;">Loading…</iframe>
         </section>
-
-
 
         <section id="program">
             <h3>Program</h3>
@@ -188,6 +262,19 @@
             const activeLink = document.getElementById('nav-' + sectionId);
             if (activeLink) {
                 activeLink.classList.add('active-tab');
+                
+                // Update indicator position
+                const nav = document.querySelector('nav');
+                const indicator = document.querySelector('.nav-indicator');
+                if (indicator && nav) {
+                    const navRect = nav.getBoundingClientRect();
+                    const linkRect = activeLink.getBoundingClientRect();
+                    
+                    indicator.style.left = `${linkRect.left - navRect.left}px`;
+                    indicator.style.width = `${linkRect.width}px`;
+                    indicator.style.top = `${linkRect.top - navRect.top}px`;
+                    indicator.style.height = `${linkRect.height}px`;
+                }
             }
         }
 
