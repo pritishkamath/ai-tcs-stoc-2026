@@ -116,6 +116,36 @@
         footer { margin-top: 0rem; padding: 0.0rem 0; }
         figure { margin-bottom: 0; }
         table td, table th { padding: 0.5rem 0.75rem; }
+        
+        .talk-title {
+            cursor: pointer;
+            color: var(--primary);
+            text-decoration: underline;
+            text-decoration-style: dotted;
+        }
+        .talk-title:hover {
+            text-decoration-style: solid;
+        }
+        .abstract {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            font-size: 0.9em;
+            color: #555;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .abstract.open {
+            max-height: 500px; /* Arbitrary large height */
+            margin-top: 0.25rem;
+            padding: 0.5rem;
+        }
+        @media (prefers-color-scheme: dark) {
+            .abstract {
+                background: #1a242d;
+                color: #ccc;
+            }
+        }
     </style>
     <script data-goatcounter="https://pritishkamath.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
@@ -258,8 +288,60 @@
         </section>
 
         <section id="program">
-            <h3>Program</h3>
-            <p>Details coming soon...</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; height: 3rem;">
+                <h3 style="margin: 0; padding: 0; line-height: 3rem;">Program</h3>
+                <button id="toggle-all-abstracts" class="outline" style="font-size: 0.9rem; padding: 0 1rem; height: 2rem; line-height: 2rem; width: auto; margin: 0;">Show all abstracts</button>
+            </div>
+            <figure>
+                <table role="grid">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 20%; white-space: nowrap;">Time</th>
+                            <th scope="col">Session</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>09:00 - 09:15</td><td>Opening Remarks</td></tr>
+                        <tr><td>09:15 - 10:00</td><td>Scott Aaronson<br>
+                            <span class="talk-title" onclick="toggleAbstract(this)">TBA</span>
+                            <div class="abstract">
+                                <strong>Abstract:</strong> TBA
+                            </div>
+                        </td></tr>
+                        <tr><td>10:00 - 10:30</td><td>Prabhakar Raghavan (virtual)<br>
+                            <span class="talk-title" onclick="toggleAbstract(this)">Some early successes and learnings in LLM-assisted Math and Theory</span>
+                        </td></tr>
+                        <tr><td>10:30 - 11:00</td><td>Sébastien Bubeck (virtual)<br>
+                            <span class="talk-title" onclick="toggleAbstract(this)">Probability, combinatorics & optimization from GPT-5 to GPT-5.5</span>
+                            <div class="abstract">
+                                <strong>Abstract:</strong> I will describe five moments that changed how I think about AI and mathematics, with the first one being when GPT-5 was released and the most recent one with GPT-5.5.
+                            </div>
+                        </td></tr>
+                        <tr><td>11:00 - 11:30</td><td>David Woodruff<br>
+                            <span class="talk-title" onclick="toggleAbstract(this)">TBA</span>
+                            <div class="abstract">
+                                <strong>Abstract:</strong> TBA
+                            </div>
+                        </td></tr>
+                        <tr><td>11:30 - 13:00</td><td>Lunch</td></tr>
+                        <tr><td>13:00 - 13:45</td><td>Carina Hong<br>
+                            <span class="talk-title" onclick="toggleAbstract(this)">TBA</span>
+                            <div class="abstract">
+                                <strong>Abstract:</strong> TBA
+                            </div>
+                        </td></tr>
+                        <tr><td>13:45 - 14:30</td><td>Mark Sellke<br>
+                            <span class="talk-title" onclick="toggleAbstract(this)">Disproof of the Unit Distance Conjecture</span>
+                            <div class="abstract">
+                                <strong>Abstract:</strong> I will discuss the recent disproof of the unit distance conjecture due to an internal model at OpenAI.
+                            </div>
+                        </td></tr>
+                        <tr><td>14:30 - 15:00</td><td>Coffee Break</td></tr>
+                        <tr><td>15:00 - 16:30</td><td>Panel</td></tr>
+                        <tr><td>16:30 - 18:00</td><td>Reception + Posters/Demos</td></tr>
+                    </tbody>
+                </table>
+            </figure>
         </section>
 
     </main>
@@ -303,6 +385,36 @@
                 }
             }
         }
+
+        function updateToggleButton() {
+            const btn = document.getElementById('toggle-all-abstracts');
+            const abstracts = document.querySelectorAll('.abstract');
+            const allOpen = Array.from(abstracts).every(a => a.classList.contains('open'));
+            
+            if (allOpen && abstracts.length > 0) {
+                btn.textContent = 'Hide all abstracts';
+            } else {
+                btn.textContent = 'Show all abstracts';
+            }
+        }
+
+        function toggleAbstract(el) {
+            const abstract = el.nextElementSibling;
+            abstract.classList.toggle('open');
+            updateToggleButton();
+        }
+
+        document.getElementById('toggle-all-abstracts').addEventListener('click', function() {
+            const abstracts = document.querySelectorAll('.abstract');
+            const allOpen = Array.from(abstracts).every(a => a.classList.contains('open'));
+            
+            if (allOpen) {
+                abstracts.forEach(a => a.classList.remove('open'));
+            } else {
+                abstracts.forEach(a => a.classList.add('open'));
+            }
+            updateToggleButton();
+        });
 
         window.addEventListener('hashchange', handleRouting);
         window.addEventListener('load', handleRouting);
