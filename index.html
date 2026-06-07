@@ -127,16 +127,14 @@
             text-decoration-style: solid;
         }
         .abstract {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            display: none;
             font-size: 0.9em;
             color: #555;
             background: #f9f9f9;
             border-radius: 4px;
         }
         .abstract.open {
-            max-height: 500px; /* Arbitrary large height */
+            display: block;
             margin-top: 0.25rem;
             padding: 0.5rem;
         }
